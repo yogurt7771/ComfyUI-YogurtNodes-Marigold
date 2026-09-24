@@ -26,37 +26,37 @@
 
 ```text
 ComfyUI/models/
-├── diffusers/
-│   └── marigold-depth-v1-1/          # 每种 V1 模型各自一个目录
-│       ├── model_index.json
-│       ├── scheduler/scheduler_config.json
-│       ├── unet/config.json
-│       ├── unet/diffusion_pytorch_model.fp16.safetensors
-│       ├── vae/config.json
-│       ├── vae/diffusion_pytorch_model.fp16.safetensors
-│       ├── text_encoder/config.json
-│       └── text_encoder/model.fp16.safetensors
+├── Marigold/
+│   ├── v1/marigold-depth-v1-1/      # 每种 V1 模型各自一个目录
+│   │   ├── model_index.json
+│   │   ├── scheduler/scheduler_config.json
+│   │   ├── unet/config.json
+│   │   ├── unet/diffusion_pytorch_model.fp16.safetensors
+│   │   ├── vae/config.json
+│   │   ├── vae/diffusion_pytorch_model.fp16.safetensors
+│   │   ├── text_encoder/config.json
+│   │   └── text_encoder/model.fp16.safetensors
+│   └── v2/
+│       ├── depth/Log-stage2/trainables.safetensors
+│       ├── normals/trainables.safetensors
+│       ├── albedo/trainables.safetensors
+│       └── qwen_text_embeddings/
+│           ├── qwen_edit_2509_qwen_depth_realimg512_prompt_embeds.pt
+│           └── qwen_edit_2509_qwen_depth_realimg512_prompt_mask.pt
 ├── diffusion_models/
 │   └── qwen_image_edit_2509_int8_convrot.safetensors
-├── vae/
-│   └── qwen_image_vae.safetensors
-└── Marigold/v2/
-    ├── depth/Log-stage2/trainables.safetensors
-    ├── normals/trainables.safetensors
-    ├── albedo/trainables.safetensors
-    └── qwen_text_embeddings/
-        ├── qwen_edit_2509_qwen_depth_realimg512_prompt_embeds.pt
-        └── qwen_edit_2509_qwen_depth_realimg512_prompt_mask.pt
+└── vae/
+    └── qwen_image_vae.safetensors
 ```
 
-V1 也识别标准无 `fp16` 后缀的 Safetensors，以及旧版 `.bin` 权重，优先使用 Safetensors。支持现有共享模型文件链接。V1 额外搜索 `models/Marigold/v1`。
+V1 也识别标准无 `fp16` 后缀的 Safetensors，以及旧版 `.bin` 权重，优先使用 Safetensors。支持现有共享模型文件链接，并兼容读取原有 `models/diffusers` 下的 V1 模型；新下载只写入 `models/Marigold/v1`。
 
-`diffusers`、`diffusion_models`、`vae` 沿用 ComfyUI 的目录注册；`marigold` 注册根目录 `models/Marigold`。外置专用目录可在 `extra_model_paths.yaml` 配置：
+`diffusers`、`diffusion_models`、`vae` 沿用 ComfyUI 的目录注册；`Marigold` 注册根目录 `models/Marigold`。外置专用目录可在 `extra_model_paths.yaml` 配置：
 
 ```yaml
 marigold_assets:
   base_path: E:/ComfyUI/models
-  marigold: Marigold
+  Marigold: Marigold
   diffusers: diffusers
 ```
 

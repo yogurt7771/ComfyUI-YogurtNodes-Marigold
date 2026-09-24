@@ -19,7 +19,7 @@ V1_MODELS = {
 V2_MODELS = ["depth/Log-stage2", "depth/Log-stage1", "depth/Log-layered", "depth/Uniform-base", "depth/Uniform-layered", "depth/Disparity-base", "depth/Disparity-layered", "normals", "albedo"]
 V2_REPO = "huawei-bayerlab/marigold-v2-0"
 PROMPT_PREFIX = {"depth": "qwen_edit_2509_qwen_depth_realimg512", "normals": "qwen_edit_2509_qwen_normals_dummy512", "albedo": "qwen_edit_2509_qwen_albedo_rgb_dummy512"}
-folder_paths.add_model_folder_path("marigold", os.path.join(folder_paths.models_dir, "Marigold"))
+folder_paths.add_model_folder_path("Marigold", os.path.join(folder_paths.models_dir, "Marigold"))
 
 
 def read_json(path):
@@ -36,9 +36,9 @@ def contained_path(root, name):
 
 
 def roots(version):
-    found = [Path(p) / version for p in folder_paths.get_folder_paths("marigold")]
+    found = [Path(p) / version for p in folder_paths.get_folder_paths("Marigold")]
     if version == "v1":
-        found = [Path(p) for p in folder_paths.get_folder_paths("diffusers")] + found
+        found += [Path(p) for p in folder_paths.get_folder_paths("diffusers")]
     return list(dict.fromkeys(found))
 
 
@@ -61,7 +61,21 @@ def component_weights(directory, component):
 
 def ensure_v1(model_name, download_model):
     candidates = [contained_path(root, model_name) for root in roots("v1")]
-    directory = next((p for p in candidates if (p / "model_index.json").is_file()), candidates[0])
+    if download_model:
+        directory = candidates[0]
+        config_files = ("model_index.json", "scheduler/scheduler_config.json", "unet/config.json", "vae/config.json", "text_encoder/config.json")
+        for candidate in candidates:
+            if not all((candidate / name).is_file() for name in config_files):
+                continue
+            try:
+                for component in ("unet", "vae", "text_encoder"):
+                    component_weights(candidate, component)
+            except FileNotFoundError:
+                continue
+            directory = candidate
+            break
+    else:
+        directory = next((p for p in candidates if (p / "model_index.json").is_file()), candidates[0])
     if download_model:
         if model_name not in V1_MODELS:
             raise ValueError("Downloads are only available for the listed official Marigold models.")
