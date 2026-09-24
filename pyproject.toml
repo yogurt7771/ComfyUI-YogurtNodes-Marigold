@@ -1,0 +1,11 @@
+[project]
+name = "ComfyUI-YogurtNodes-Marigold"
+version = "0.1.0"
+description = "Native ComfyUI Marigold V1 and V2 depth, normals, and intrinsic decomposition."
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+dependencies = ["huggingface_hub>=0.26"]
+
+[tool.comfy]
+DisplayName = "ComfyUI-YogurtNodes-Marigold"
+Icon = ""

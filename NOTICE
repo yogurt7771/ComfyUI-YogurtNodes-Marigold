@@ -1,0 +1,18 @@
+ComfyUI-YogurtNodes-Marigold
+
+The native Marigold V1/V2 integration was developed with reference to:
+  https://github.com/kijai/ComfyUI-Marigold (GPL-3.0)
+  https://github.com/visualbruno/ComfyUI-Marigold-v2 (Apache-2.0)
+  https://github.com/Manivannansvfx/ComfyUI-MarigoldV2 (Apache-2.0)
+  https://github.com/prs-eth/Marigold (Apache-2.0)
+  https://github.com/huawei-bayerlab/marigold-v2 (Apache-2.0)
+  https://github.com/huggingface/diffusers (Apache-2.0)
+
+Marigold V2 reference implementation:
+Copyright 2026 Huawei Technologies Co., Ltd.
+
+DDIM and LCM equations and checkpoint conventions follow the upstream model
+implementations. Qwen VAE decoder naming follows the native ComfyUI mapping
+documented by visualbruno/ComfyUI-Marigold-v2.
+
+No third-party model weights are redistributed by this package.
