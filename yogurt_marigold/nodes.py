@@ -109,7 +109,7 @@ class YogurtMarigoldV2Loader:
     @classmethod
     def INPUT_TYPES(cls):
         return {"required": {
-            "model": ("MODEL", {"tooltip": "Qwen Image Edit 2509, including native FP8 or GGUF from its standard loader."}),
+            "model": ("MODEL", {"tooltip": "Qwen Image Edit 2509 from ComfyUI's Load Diffusion Model or another compatible loader."}),
             "vae": ("VAE", {"tooltip": "Qwen Image VAE; use qwen_image_vae.safetensors."}),
             "checkpoint": (model_paths.V2_MODELS,),
             "download_model": DOWNLOAD,

@@ -37,7 +37,7 @@ ComfyUI/models/
 │       ├── text_encoder/config.json
 │       └── text_encoder/model.fp16.safetensors
 ├── diffusion_models/
-│   └── qwen_image_edit_2509_fp8_e4m3fn_scaled.safetensors
+│   └── qwen_image_edit_2509_int8_convrot.safetensors
 ├── vae/
 │   └── qwen_image_vae.safetensors
 └── Marigold/v2/
@@ -77,7 +77,7 @@ V2 的下载开关下载所选 Marigold 适配器及对应的两份预计算文�
 
 ## V2 模型
 
-使用 **Qwen Image Edit 2509** 主模型与 **Qwen Image VAE**。标准 FP8 模型通过 `Load Diffusion Model` 加载；GGUF 可以通过已有的 GGUF 加载器提供 MODEL。请勿使用 Lightning 加速 LoRA 或 Qwen Image 2.1 主模型代替训练底模。
+官方 V2 checkpoint 是 Qwen Image Edit 2509 的 LoRA，部分 checkpoint 还包含微调后的 VAE 解码器；它不是独立的完整扩散模型。用 ComfyUI 原生 `Load Diffusion Model`、`Load VAE` 连接已有的 2509 底模；本插件应用官方适配器、预计算文本张量并执行固定单步推理，不下载 Qwen 底模。示例选用本地 INT8 ConvRot 文件，也可在原生加载器中选择同一底模的其他精度。底模量化精度会影响结果；请勿使用 Lightning 加速 LoRA 或 Qwen Image 2.1 代替训练底模。
 
 官方适配器仓库为 `huawei-bayerlab/marigold-v2-0`：
 
